@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio Recorder</title>
+</head>
+<body>
+    <h1>Audio Recorder</h1>
+    <button id="recordButton" onclick="toggleRecording()">Record</button>
+    <div id="output"></div>
+    <script>
+        var recording = false;
+        var recognition = new webkitSpeechRecognition();
+        recognition.continuous = true;
+
+        recognition.onresult = function(event) {
+            var result = event.results[event.results.length - 1][0].transcript;
+            document.getElementById('output').textContent = result;
+        };
+
+        function toggleRecording() {
+            if (!recording) {
+                recognition.start();
+                document.getElementById('recordButton').textContent = 'Stop Recording';
+            } else {
+                recognition.stop();
+                document.getElementById('recordButton').textContent = 'Record';
+            }
+            recording = !recording;
+        }
+    </script>
+</body>
+</html>
